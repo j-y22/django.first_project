@@ -15,24 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from django.http import HttpResponse
-from .models import Author, Profile
-
-def my_view(request, *args, **kwargs):
-    print(args)
-    print(kwargs)
-    return HttpResponse("")
-
-def author_view(request, *args, **kwargs):
-    print(args)
-    print(kwargs)
-    author = Author.objects.get(id=kwargs['id'])
-    profile = Profile.objects.get(author_id=kwargs['id'])
-    return HttpResponse(f"Author: {author.name} - Website: {profile.website} - Biografia: {profile.biography} ")
+from .views import my_view, car_view, author_view, CarListView
 
 urlpatterns = [
-    path("listado/", my_view),
-    path("detalle/<int:id>", my_view),
-    path("marcas/<str:brand>", my_view),
+    #path("listado/", my_view),
+    path("listado/", CarListView.as_view()),
+    path("detalle/<int:id>", car_view),
+    path("marcas/<str:brand>", car_view),
     path("author/<int:id>", author_view),
 ]

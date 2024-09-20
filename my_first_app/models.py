@@ -25,7 +25,7 @@ class Author(models.Model):
         return self.name
     
 class Profile(models.Model):
-    author = models.OneToOneField(Author, on_delete=models.CASCADE)
+    author = models.OneToOneField(Author, on_delete=models.CASCADE) #cual es la key de author que usa prifile como foreign key?
     website= models.URLField()
     biography= models.TextField(max_length=200)
     
