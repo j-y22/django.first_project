@@ -14,10 +14,25 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from django.http import HttpResponse
+from .models import Author, Profile
+
+def my_view(request, *args, **kwargs):
+    print(args)
+    print(kwargs)
+    return HttpResponse("")
+
+def author_view(request, *args, **kwargs):
+    print(args)
+    print(kwargs)
+    author = Author.objects.get(id=kwargs['id'])
+    profile = Profile.objects.get(author_id=kwargs['id'])
+    return HttpResponse(f"Author: {author.name} - Website: {profile.website} - Biografia: {profile.biography} ")
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('carros/', include('my_first_app.urls')),
+    path("listado/", my_view),
+    path("detalle/<int:id>", my_view),
+    path("marcas/<str:brand>", my_view),
+    path("author/<int:id>", author_view),
 ]
